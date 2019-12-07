@@ -1,7 +1,8 @@
 let mongoose = require('mongoose');
 let Bookings = require('./model.js');
-let data = require('./capBnBTestData.js');
+let data = JSON.parse(require('./allListings.json'));
 let Promise = require('bluebird');
+// let BookingModel = require('./model.js');
 mongoose.Promise = Promise;
 
 var sampleAvailableDays = [
@@ -16,16 +17,20 @@ var sampleAvailableDays = [
   new Date(2018, 3, 11), new Date(2018, 3, 12), new Date(2018, 3, 13),
 ];
 
+
 var seedDb = function(data) {
   let connect;
-  let connection = mongoose.connect('mongodb://localhost/bookings')
+  let connection = mongoose.connect('mongodb://localhost/airbnb_bookings')
+  // let connection = mongoose.connect('mongodb://localhost/airbnb_bookings')
     .then((c) => {
       connect = c;
       console.log('success connected to db!');
-      mongoose.Promise.map(data, (booking) => {
-        console.log('boooking is: ', booking);
-        booking.available_days = sampleAvailableDays;
-        return Bookings.insertOne(booking);
+      // var BookingModel = Bookings.BookingModel;
+      mongoose.Promise.map(data, (booking, i) => {
+        booking.listing.available_days = sampleAvailableDays;
+        booking.listing.roomId = 11111111 + i;
+        console.log('boooking is: ', booking.listing);
+        return Bookings.insertOne(booking.listing);
       })
         .then(() => {
           console.log('Successfully seeded database!');

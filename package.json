@@ -11,7 +11,8 @@
     "test": "jest",
     "start": "node database/seed.js & node server/index.js",
     "react-dev": "webpack -d --watch",
-    "seed-database": "node database/seed.js"
+    "seed-database": "node database/seed.js",
+    "dev-start": "node database/seed.js & nodemon server/index.js"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",

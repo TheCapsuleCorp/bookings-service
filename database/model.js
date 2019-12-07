@@ -6,7 +6,7 @@ mongoose.Promise = Promise;
 // let MONGO_SERVER = '172.18.0.2';
 //       - MONGO_PORT=27017
 
-mongoose.connect('mongodb://localhost/bookings');
+mongoose.connect('mongodb://localhost/airbnb_bookings');
 // mongoose.connect('mongodb://localhost/airbnb_bookings');
 
 // let mongoServer = process.env.MONGO_SERVER || 'localhost';
@@ -18,7 +18,7 @@ mongoose.connect('mongodb://localhost/bookings');
 
 var BookingSchema = mongoose.Schema({
   'id': {type: Number, unique: true},
-  'roomId': {type: Number, unique: true},
+  'roomId': Number,
   'city': String,
   'has_availability': Boolean,
   'min_nights': Number,

@@ -15,9 +15,9 @@ console.log('test: ', path.resolve('./public/index.html'));
 //   });
 
 apiRouter
-  .route('/rooms/:roomId/bookings')
+  .route('/rooms/:roomid/bookings')
   .get((req, res, next) => {
-    db.findOne(req.params.roomId)
+    db.findOne(req.params.roomid)
       .then((data) => {
         res.json(data);
       })
@@ -29,3 +29,5 @@ apiRouter
   );
 
 module.exports = apiRouter;
+
+
