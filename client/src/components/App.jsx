@@ -35,15 +35,15 @@ class App extends React.Component {
   }
 
   handleGuestsClick(boolean) {
-    boolean 
-    ? $('#guest-modal').css('display', 'block') 
-    : $('#guest-modal').css('display', 'none');
+    boolean
+      ? $('#guest-modal').css('display', 'block')
+      : $('#guest-modal').css('display', 'none');
   }
 
   getBookingInfo() {
     $.ajax({
       method: 'GET',
-      url: `/api/rooms/${this.props.listingId}/bookings`,
+      url: `http://localhost:3003/api/rooms/${this.props.listingId}/bookings`,
       success: (data) => {
         let dates = data.available_days.map( x => new Date(x));
         data.available_days = dates;
@@ -60,7 +60,7 @@ class App extends React.Component {
   updateGuestsTotal(ageGroup, total) {
     this.state[ageGroup] = total;
     this.setState({
-      totalGuests: this.state.adults 
+      totalGuests: this.state.adults
         + this.state.children
     });
   }
@@ -76,14 +76,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="bookings-app-container">
-        
+
         <div className='price-and-rating'>
           <span className='price-header'>${this.state.listingInfo.price}</span>
           <span className='caption'> per night</span>
         </div>
 
         <a className='star-rating-link' href='#'>
-          <StarRating 
+          <StarRating
             rating={this.state.listingInfo.star_rating}/>
           <span className='caption'>{this.state.listingInfo.reviews_count}</span>
         </a>
@@ -93,21 +93,21 @@ class App extends React.Component {
           Dates
         </div>
 
-        <MyCalendar 
+        <MyCalendar
           availableDays={this.state.listingInfo.available_days}
           showCalendar={this.state.showCalendar}
           triggerPricingTotal={this.triggerPricingTotal}
         />
 
         <br></br>
-        <div> 
+        <div>
 
               <ClickOutHandler onClickOut={this.handleGuestsClick.bind(this, false)}>
           <div>
 
             <div className='caption'>Guests
             </div>
-            <button className='guest-btn' onClick={this.handleGuestsClick.bind(this, true)}> 
+            <button className='guest-btn' onClick={this.handleGuestsClick.bind(this, true)}>
               {this.state.totalGuests} Guest{this.state.totalGuests > 1 ? 's' : null}
             </button>
           </div>
@@ -115,8 +115,8 @@ class App extends React.Component {
 
             <div className='guest-modal-container'>
 
-              <div id='guest-modal'>    
-                <Guests 
+              <div id='guest-modal'>
+                <Guests
                   personCapacity={this.state.listingInfo.person_capacity}
                   handleClose={this.handleGuestsClick.bind(this, false)}
                   updateGuestsTotal={this.updateGuestsTotal}
@@ -124,12 +124,12 @@ class App extends React.Component {
               </div>
             </div>
 
-            </ClickOutHandler> 
+            </ClickOutHandler>
 
-        </div> 
+        </div>
 
         <br></br>
-        <PricingTotal 
+        <PricingTotal
           showPricing={this.state.showPricing}
           adults={this.state.adults}
           children={this.state.children}
@@ -137,8 +137,8 @@ class App extends React.Component {
           startDate={this.state.startDate}
           endDate={this.state.endDate}
           price={this.state.listingInfo.price}
-          weekendPrice={this.state.listingInfo.listing_weekend_price_native === null 
-            ? this.state.listingInfo.price 
+          weekendPrice={this.state.listingInfo.listing_weekend_price_native === null
+            ? this.state.listingInfo.price
             : this.state.listingInfo.listing_weekend_price_native}
           cleaningFee={this.state.listingInfo.cleaning_fee_native}
           listingPriceForExtraPerson={this.state.listing_price_for_extra_person_native}
@@ -156,26 +156,26 @@ class App extends React.Component {
 
         <div className='on-peoples-minds caption top-border'>
           <img className='icon' src='https://a0.muscache.com/airbnb/static/page3/icon-uc-light-bulb-b34f4ddc543809b3144949c9e8cfcc8d.gif'
-            align='right' 
+            align='right'
           ></img>
           <span className='bold'>This home is on people’s minds.</span><br></br>
-          <span>It’s been viewed { Math.round(this.state.listingInfo.reviews_count / 100) * 100 > 0 
+          <span>It’s been viewed { Math.round(this.state.listingInfo.reviews_count / 100) * 100 > 0
             ? Math.round(this.state.listingInfo.reviews_count / 100) * 100
             : 'lots of'
           } times in the past week.</span>
 
         </div>
         <br></br>
-    
+
         <div align="center">
           <img  className="icon-small" src='https://image.flaticon.com/icons/svg/149/149262.svg'></img>
-            <span 
+            <span
               className='caption link thin'>Report this listing
 
 
             </span>
         </div>
-                                           
+
 
 
       </div>
